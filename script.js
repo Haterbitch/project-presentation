@@ -120,6 +120,7 @@ class ImageGallery {
         this.createThumbnails();
         this.showImage(0);
         this.setupClickHandlers();
+        this.setupKeyboardHandlers(); // <-- NY LINJE TIL PILETASTER
     }
 
     /**
@@ -244,6 +245,23 @@ class ImageGallery {
             if (clickedThumbnail) {
                 const imageIndex = parseInt(clickedThumbnail.getAttribute('data-index'));
                 this.showImage(imageIndex);
+            }
+        });
+    }
+
+    /**
+     * NY FUNKTION - Brug piletaster til at skifte billeder
+     */
+    setupKeyboardHandlers() {
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight') {
+                // Skift til næste billede
+                let nextIndex = (this.currentImageIndex + 1) % this.images.length;
+                this.showImage(nextIndex);
+            } else if (event.key === 'ArrowLeft') {
+                // Skift til forrige billede
+                let prevIndex = (this.currentImageIndex - 1 + this.images.length) % this.images.length;
+                this.showImage(prevIndex);
             }
         });
     }
